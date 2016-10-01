@@ -348,6 +348,10 @@ module GoogleDrive
     #   session.collection_by_url(
     #     "http://docs.google.com/feeds/default/private/full/folder%3A" +
     #     "0B9GfDpQ2pBVUODNmOGE0NjIzMWU3ZC00NmUyLTk5NzEtYaFkZjY1MjAyxjMc")
+    #   session.collection_by_url(
+    #     "https://drive.google.com/drive/u/0/folders/" +
+    #     "0B9GfDpQ2pBVUODNmOGE0NjIzMWU3ZC00NmUyLTk5NzEtYaFkZjY1MjAyxjMc")
+
     def collection_by_url(url)
       file = file_by_url(url)
       unless file.is_a?(Collection)
@@ -545,6 +549,9 @@ module GoogleDrive
         when /\/d\/([^\/]+)/
           return Regexp.last_match(1)
           # Human-readable new collection page.
+        when /^\/drive\/u\/\d+\/folders\/([^\/]+)/
+          return Regexp.last_match(1)
+          # Human-readable collection page with multi account
         when /^\/drive\/[^\/]+\/([^\/]+)/
           return Regexp.last_match(1)
           # Human-readable old folder view.
